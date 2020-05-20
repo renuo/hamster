@@ -25,3 +25,7 @@ Today we're going to implement HAM6 in Rust.
 | 11:40 | Merging  |
 | 13:00 | Forking  |
 | 17:00 | Wrap-up  |
+
+## Installation
+
+Have [rustup](https://rustup.rs/) ready, checkout this repo and run `cargo test` and `cargo run`.
