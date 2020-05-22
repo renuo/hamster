@@ -16,7 +16,6 @@ Here you see the Apple II with 6 colors, Commodore C64 with 16 colors, IBM EGA 1
 The Amiga used a Motorola CPU clocked at 7.09MHz and PAL delivers frames at 15'625 lines per second. Since video memory is shared with the CPU, this means that you already use up a lot of your [CPU cycles for managing graphics memory](https://retrocomputing.stackexchange.com/a/2149). So the Amiga makers used a neat trick to cheat these limits. It's called [Hold-and-Modify](https://en.wikipedia.org/wiki/Hold-And-Modify).
 
 Today we're going to implement HAM6 in Rust.
-http://theamigamuseum.com/the-hardware/the-amigas-graphic-modes/
 
 ## Timetable
 
@@ -37,7 +36,7 @@ In the afternoon you're free to follow down these rabbit holes.
 
 * Retro Computing
   Color clocks https://retrocomputing.stackexchange.com/a/2149 http://amigadev.elowar.com/read/ADCD_2.1/Hardware_Manual_guide/node012A.html 
-  Amiga Halfbrite, DigiView Dynamic (Copper hacks) https://wiki.amigaos.net/wiki/Classic_Graphics_Primitives#Advanced_Topics
+  Amiga Graphics modes: Halfbrite, DigiView Dynamic (Copper hacks) http://theamigamuseum.com/the-hardware/the-amigas-graphic-modes/ https://wiki.amigaos.net/wiki/Classic_Graphics_Primitives#Advanced_Topics
   CRT monitor simulation on today's systems
 * Rust
   Rust language and libraries:
