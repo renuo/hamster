@@ -38,8 +38,8 @@ Today we're going to dig up some history and reimplement Hold-and-Modify (OCS HA
 _Why Rust?_
 
 Rust is a language suited for system-programming. It's very close to the limiting hardware but at the same
-provides very powerful abstractions and safety guarantuees which help you to not fall into traps of
-alternative languages (like C++). The ecosystem is growing at an enormous pace with the support of C++ heavy-weights
+time provides very powerful abstractions and safety guarantuees which help you to not fall into traps of
+alternative languages (like C++). Its ecosystem is growing at an enormous pace with the support of C++ heavy-weights
 like Microsoft.
 
 The aim of today is not to grasp all concepts of Rust but simply to have a glimpse. But please read at least
@@ -75,17 +75,17 @@ Before lunch we'll meet and present our resulting images.
 ## Afternoon Tracks
 
 The afternoon is like a longer find-and-discover block of the Renuo Learning Week. You can follow down
-the rabbit holes of the three core areas of Rust, Retro Computing or Computer Graphics as long
+the rabbit holes of three core areas being Rust, Retro Computing or Computer Graphics as long
 as you start in the context of this morning's exercise.
 
 ### Rust
 
 Learn more about Rust by improving this scaffold. For example you could
 
-* extend the `image` crate with a HAM image (e.g. using the crate's `Pixel` trait).
-* extend the `image` crate with the [PPM image format](http://netpbm.sourceforge.net/doc/ppm.html#plainppm)
+* extend the [`image` crate](https://docs.rs/image/0.23.4/image/) with a HAM image (e.g. using the crate's `Pixel` trait).
+* extend the [`image` crate](https://docs.rs/image/0.23.4/image/) with the [PPM image format](http://netpbm.sourceforge.net/doc/ppm.html#plainppm)
 * create a binary image format to persist our HAM image
-* adjust the current solution so that it uses planar pixles (what the Amiga did) instead of packed pixels (what we have today)
+* adjust the current solution so that it uses planar pixels (what the Amiga did) instead of packed pixels (what we have today)
 * reasearch the IFF image format
 * improve performance of the current code (e.g. with a [flamegraph](https://github.com/flamegraph-rs/flamegraph)
   or [criterion](https://docs.rs/criterion/0.3.2/criterion/) directly)
@@ -99,8 +99,8 @@ Learn more about long forgotten restrictions and how they creatively have been o
   [Amiga CPU speed](https://retrocomputing.stackexchange.com/a/2149),
   [Amiga DMA](http://amigadev.elowar.com/read/ADCD_2.1/Hardware_Manual_guide/node012A.html)
 * research about other [advanced graphics features](https://wiki.amigaos.net/wiki/Classic_Graphics_Primitives#Advanced_Topics)
-  of the Amiga like Halfbrite or some creative Copper hacks like the [DigiView Dynamic mode](https://amigalove.com/viewtopic.php?f=7&t=620).
-* research and try CRT simulations. We forgot how different games looked n CRTs (e.g. [this one](https://www.gamasutra.com/blogs/KylePittman/20150420/241442/CRT_Simulation_in_Super_Win_the_Game.php) or
+  of the Amiga, like Halfbrite or some creative Copper hacks, like the [DigiView Dynamic mode](https://amigalove.com/viewtopic.php?f=7&t=620).
+* research and try CRT simulations. We forgot how different games looked on CRTs (e.g. [this one](https://www.gamasutra.com/blogs/KylePittman/20150420/241442/CRT_Simulation_in_Super_Win_the_Game.php) or
   [this one](https://web.archive.org/web/20180927020443/http://www.piratehearts.com/blog/2014/03/28/crt-simulation/))
 
 ### Computer Graphics
