@@ -3,12 +3,12 @@
 This repository contains the Rust scaffold for the Renuo learning day 2020.
 The day will follow this timetable:
 
-| Time  | Activity     |
-| ----: | ------------ |
-|  8:00 | Introduction |
-| 11:40 | Merging      |
-| 13:00 | Forking      |
-| 17:00 | Wrap-up      |
+| Time  | Activity          |
+| ----: | ----------------- |
+|  8:00 | Introduction      |
+| 11:40 | Showcase          |
+| 13:00 | Follow the rabbit |
+| 17:00 | Wrap-up           |
 
 ## Introduction
 
@@ -54,31 +54,67 @@ The task of this morning is to implement a HAM6 encoder, so that `cargo run` (ru
 
 1. reads an image from `data_in` into an `RgbImage<u8>`
 1. encodes it as a `HamImage<Ham6Pixel>`
-1. converts it back to an `RgbImage<u8>`
-1. writes it to `data_out`
+1. decodes it back to an `RgbImage<u8>`
+1. writes it to `data_out` as a Bitmap or PNG.
 
 While the scaffold does all this already, it now simply converts the 24bit RGB image into a HAM image by
 always using the closest color of the 16 colors base palette. This means that the last two bits of
 `Ham6Pixel` are always zero. So you currently end up with a 16 color image in the `data_out` folder
 instead of the promised 4096 colors.
 
-Enhance the current solution to make full use of the last two bits!
+Enhance the current solution to make full use of the last two bits by using your own HAM encoding strategy!
+
+Some reading resources:
+
+* http://theamigamuseum.com/the-hardware/the-amigas-graphic-modes/
+* https://en.wikipedia.org/wiki/Hold-And-Modify
+* https://wiki.amigaos.net/wiki/Classic_Graphics_Primitives#Advanced_Topics
+
+Before lunch we'll meet and present our resulting images.
 
 ## Afternoon Tracks
 
-In the afternoon you're free to follow down these rabbit holes.
+The afternoon is like a longer find-and-discover block of the Renuo Learning Week. You can follow down
+the rabbit holes of the three core areas of Rust, Retro Computing or Computer Graphics as long
+as you start in the context of this morning's exercise.
 
-* Retro Computing
-  Color clocks https://retrocomputing.stackexchange.com/a/2149 http://amigadev.elowar.com/read/ADCD_2.1/Hardware_Manual_guide/node012A.html 
-  Amiga Graphics modes: Halfbrite, DigiView Dynamic (Copper hacks) http://theamigamuseum.com/the-hardware/the-amigas-graphic-modes/ https://wiki.amigaos.net/wiki/Classic_Graphics_Primitives#Advanced_Topics
-  CRT monitor simulation on today's systems
-* Rust
-  Rust language and libraries:
-  image library extension for the Ham6Image, binary image format for ham6, planar instead of packed pixels
-  improve the code of the HAM solution regarding performance, Amiga accuracy or clean code.
-* Computer Graphics
-  CRT & NTSC/PAL https://en.wikipedia.org/wiki/Interlaced_video https://en.wikipedia.org/wiki/Cathode-ray_tube https://en.wikipedia.org/wiki/Multisync_monitor
-  Color palettes (https://en.wikipedia.org/wiki/List_of_16-bit_computer_color_palettes) and color spaces (https://de.wikipedia.org/wiki/Farbraum)
-  HAM Palette optimization and encoding (e.g. with ML) http://theamigamuseum.com/the-hardware/the-amigas-graphic-modes/
-  Chroma Subsampling (https://github.com/leandromoreira/digital_video_introduction#chroma-subsampling)
-  Pixel (definition, history, size, length, etc.)
+### Rust
+
+Learn more about Rust by improving this scaffold. For example you could
+
+* extend the `image` crate with a HAM image (e.g. using the crate's `Pixel` trait).
+* extend the `image` crate with the [PPM image format](http://netpbm.sourceforge.net/doc/ppm.html#plainppm)
+* create a binary image format to persist our HAM image
+* adjust the current solution so that it uses planar pixles (what the Amiga did) instead of packed pixels (what we have today)
+* reasearch the IFF image format
+* improve performance of the current code (e.g. with a [flamegraph](https://github.com/flamegraph-rs/flamegraph)
+  or [criterion](https://docs.rs/criterion/0.3.2/criterion/) directly)
+
+### Retro Computing
+
+Learn more about long forgotten restrictions and how they creatively have been overcome. For example you could
+
+* research about color clocks and find out why the HAM mode was such a neat trick to overcome
+  speed issues:
+  [Amiga CPU speed](https://retrocomputing.stackexchange.com/a/2149),
+  [Amiga DMA](http://amigadev.elowar.com/read/ADCD_2.1/Hardware_Manual_guide/node012A.html)
+* research about other [advanced graphics features](https://wiki.amigaos.net/wiki/Classic_Graphics_Primitives#Advanced_Topics)
+  of the Amiga like Halfbrite or some creative Copper hacks like the [DigiView Dynamic mode](https://amigalove.com/viewtopic.php?f=7&t=620).
+* research and try CRT simulations. We forgot how different games looked n CRTs (e.g. [this one](https://www.gamasutra.com/blogs/KylePittman/20150420/241442/CRT_Simulation_in_Super_Win_the_Game.php) or
+  [this one](https://web.archive.org/web/20180927020443/http://www.piratehearts.com/blog/2014/03/28/crt-simulation/))
+
+### Computer Graphics
+
+Learn about digital color representation. For example you could
+
+* research CRT and color broadcasting formats like NTSC or PAL.
+  Starting points:
+  [CRT monitor](https://en.wikipedia.org/wiki/Cathode-ray_tube),
+  [Interlacing](https://en.wikipedia.org/wiki/Interlaced_video),
+  [Multisync](https://en.wikipedia.org/wiki/Multisync_monitor)
+* research the history and details of
+  [color palettes](https://en.wikipedia.org/wiki/List_of_16-bit_computer_color_palettes),
+  [color spaces](https://de.wikipedia.org/wiki/Farbraum) and perception optimizations like
+  [chroma subsampling](https://github.com/leandromoreira/digital_video_introduction#chroma-subsampling)
+* research HAM Palette optimization and encoding. There are techniques like dithering and
+  [many more](http://mrsebe.bplaced.net/blog/wordpress/?p=1339), but why not apply some ML for example?
