@@ -45,11 +45,16 @@ like Microsoft.
 The aim of today is not to grasp all concepts of Rust but simply to have a glimpse. But please read at least
 the [Learn X in Y minutes guide](https://learnxinyminutes.com/docs/rust/) and try to roughly understand [ownership and borrowing concepts](https://doc.rust-lang.org/1.30.0/book/first-edition/ownership.html).
 
-## Installation
+## The Morning Track
 
-https://www.rust-lang.org/tools/install
+### 1. Install
 
-Have [rustup](https://rustup.rs/) ready, checkout this repo and run `cargo test` and `cargo run`.
+If you didn't already, please install [rustup](https://www.rust-lang.org/tools/install).
+Then checkout this repo and run `cargo test` and `cargo run`.
+
+### 2. Implement
+
+TODO
 
 ## Afternoon Tracks
 
