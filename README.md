@@ -17,12 +17,16 @@ able to show colors, you could choose between quite some different computer syst
 
 Apple II with 6 colors | Commodore C64 with 16 colors | IBM EGA 16 colors | Amiga HAM6 mode
 
-The Apple II was quite slow by 1985, but you would get good laser printer support only on Macs. The C64 was quite cheap and you got tons of software for it. The IBM PC got the fastest CPU clock speeds. The Amiga revolutionized multimedia
-with great graphics and sound.
+The Apple II was quite slow by 1985, but you would get good laser printer support only on Macs. The C64 was quite
+cheap and you got tons of software for it. The IBM PC got the fastest CPU clock speeds. The Amiga revolutionized
+the market for a short time with fantastic graphics and sound support.
 
-The Amiga used a Motorola CPU clocked at 7.09MHz and PAL delivers frames at 15'625 lines per second. Since video memory is shared with the CPU, this means that you already use up a lot of your [CPU cycles for managing graphics memory](https://retrocomputing.stackexchange.com/a/2149). So the Amiga makers used a neat trick to cheat these limits. It's called [Hold-and-Modify](https://en.wikipedia.org/wiki/Hold-And-Modify).
+Technically good graphics were possible already, but extremely expensive. The Amiga on the otherhand was affordable.
+It used a Motorola CPU clocked at 7.09MHz and PAL frames at 15'625 lines per second. Since video memory is shared
+with the CPU, this means that you already use up a lot of your [CPU cycles for managing graphics memory](https://retrocomputing.stackexchange.com/a/2149). So the Amiga engineers used a neat trick to cheat these limits.
+It's called [Hold-and-Modify](https://en.wikipedia.org/wiki/Hold-And-Modify).
 
-Today we're going to implement HAM6 in Rust.
+Today we're going to look a bit deeper into this trick and reimplement Hold-and-Modify (OCS HAM6 mode) in Rust.
 
 ## Timetable
 
