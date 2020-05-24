@@ -1,14 +1,21 @@
 # Rust and Pixels
 
-This is the scaffold for the Renuo learning day 2020.
+This repository contains the Rust scaffold for the Renuo learning day 2020.
+The day will follow this timetable:
 
-## Expensive colors
+| Time  | Activity     |
+| ----: | ------------ |
+|  8:00 | Introduction |
+| 11:40 | Merging      |
+| 13:00 | Forking      |
+| 17:00 | Wrap-up      |
+
+## Introduction
 
 Let's go back to 1985 when colors did cost a lot of money: Commodore announced its Amiga 1000 system which was
 capable of showing all 4096 colors (12bit) on the screen simultaneously. This really blew people's minds. They were 
 used to monochrome screens (PAL was introduced just some years ago) or to not more than 16 colors. If your screen was
 able to show colors, you could choose between quite some different computer systems:
-
 
 ![](https://upload.wikimedia.org/wikipedia/commons/5/5a/Screen_color_test_AppleII_HighRes.png)
 ![](https://upload.wikimedia.org/wikipedia/commons/e/ef/Screen_color_test_Commodore64_Multicolor.png)
@@ -21,23 +28,26 @@ The Apple II was quite slow by 1985, but you would get good laser printer suppor
 cheap and you got tons of software for it. The IBM PC got the fastest CPU clock speeds. The Amiga revolutionized
 the market for a short time with fantastic graphics and sound support.
 
-Technically good graphics were possible already, but extremely expensive. The Amiga on the otherhand was affordable.
-It used a Motorola CPU clocked at 7.09MHz and PAL frames at 15'625 lines per second. Since video memory is shared
+Technically good graphics were possible already, but extremely expensive. The Amiga on the other hand was affordable.
+It used a Motorola CPU clocked at 7.09MHz and PAL frames at 15'625 lines per second. Since its video memory is shared
 with the CPU, this means that you already use up a lot of your [CPU cycles for managing graphics memory](https://retrocomputing.stackexchange.com/a/2149). So the Amiga engineers used a neat trick to cheat these limits.
 It's called [Hold-and-Modify](https://en.wikipedia.org/wiki/Hold-And-Modify).
 
-Today we're going to look a bit deeper into this trick and reimplement Hold-and-Modify (OCS HAM6 mode) in Rust.
+Today we're going to dig up some history and reimplement Hold-and-Modify (OCS HAM6 mode) in Rust.
 
-## Timetable
+_Why Rust?_
 
-| Time  | Activity |
-| ----: | -------- |
-|  8:00 | Kickoff  |
-| 11:40 | Merging  |
-| 13:00 | Forking  |
-| 17:00 | Wrap-up  |
+Rust is a language suited for system-programming. It's very close to the limiting hardware but at the same
+provides very powerful abstractions and safety guarantuees which help you to not fall into traps of
+alternative languages (like C++). The ecosystem is growing at an enormous pace with the support of C++ heavy-weights
+like Microsoft.
+
+The aim of today is not to grasp all concepts of Rust but simply to have a glimpse. But please read at least
+the [Learn X in Y minutes guide](https://learnxinyminutes.com/docs/rust/) and try to roughly understand [ownership and borrowing concepts](https://doc.rust-lang.org/1.30.0/book/first-edition/ownership.html).
 
 ## Installation
+
+https://www.rust-lang.org/tools/install
 
 Have [rustup](https://rustup.rs/) ready, checkout this repo and run `cargo test` and `cargo run`.
 
