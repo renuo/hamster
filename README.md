@@ -45,16 +45,24 @@ like Microsoft.
 The aim of today is not to grasp all concepts of Rust but simply to have a glimpse. But please read at least
 the [Learn X in Y minutes guide](https://learnxinyminutes.com/docs/rust/) and try to roughly understand [ownership and borrowing concepts](https://doc.rust-lang.org/1.30.0/book/first-edition/ownership.html).
 
-## The Morning Track
-
-### 1. Install
+## Morning Track
 
 If you didn't already, please install [rustup](https://www.rust-lang.org/tools/install).
-Then checkout this repo and run `cargo test` and `cargo run`.
+Then checkout this repo and run `cargo test`.
 
-### 2. Implement
+The task of this morning is to implement a HAM6 encoder, so that `cargo run` (running `src/bin/main.rs`)
 
-TODO
+1. reads an image from `data_in` into an `RgbImage<u8>`
+1. encodes it as a `HamImage<Ham6Pixel>`
+1. converts it back to an `RgbImage<u8>`
+1. writes it to `data_out`
+
+While the scaffold does all this already, it now simply converts the 24bit RGB image into a HAM image by
+always using the closest color of the 16 colors base palette. This means that the last two bits of
+`Ham6Pixel` are always zero. So you currently end up with a 16 color image in the `data_out` folder
+instead of the promised 4096 colors.
+
+Enhance the current solution to make full use of the last two bits!
 
 ## Afternoon Tracks
 
