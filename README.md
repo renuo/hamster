@@ -45,7 +45,7 @@ like Microsoft.
 The aim of today is not to grasp all concepts of Rust but simply to have a glimpse. But please read at least
 the [Learn X in Y minutes guide](https://learnxinyminutes.com/docs/rust/) and try to roughly understand [ownership and borrowing concepts](https://doc.rust-lang.org/1.30.0/book/first-edition/ownership.html).
 
-## Morning Track
+## Morning Track – HAM6 in Rust
 
 If you didn't already, please install [rustup](https://www.rust-lang.org/tools/install).
 Then checkout this repo and run `cargo test`.
@@ -72,11 +72,13 @@ Some reading resources:
 
 Before lunch we'll meet and present our resulting images.
 
-## Afternoon Tracks
+## Afternoon Tracks – Find and Discover
 
 The afternoon is like a longer find-and-discover block of the Renuo Learning Week. You can follow down
 the rabbit holes of three core areas being Rust, Retro Computing or Computer Graphics as long
 as you start in the context of this morning's exercise.
+
+Please prepare a condensed lightning talk which maps out the path you took for the next company meeting.
 
 ### Rust
 
