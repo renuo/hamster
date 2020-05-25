@@ -115,6 +115,7 @@ Learn about digital color representation. For example you could
 * research the history and details of
   [color palettes](https://en.wikipedia.org/wiki/List_of_16-bit_computer_color_palettes),
   [color spaces](https://de.wikipedia.org/wiki/Farbraum) and perception optimizations like
-  [chroma subsampling](https://github.com/leandromoreira/digital_video_introduction#chroma-subsampling)
+  [chroma subsampling](https://github.com/leandromoreira/digital_video_introduction#chroma-subsampling).
+  Also interesting are the [wide-gamut efforts for CSS](https://webkit.org/blog/6682/improving-color-on-the-web).
 * research HAM Palette optimization and encoding. There are techniques like dithering and
   [many more](http://mrsebe.bplaced.net/blog/wordpress/?p=1339), but why not apply some ML for example?
