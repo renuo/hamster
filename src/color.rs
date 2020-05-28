@@ -9,24 +9,16 @@ pub struct AmigaRgb (pub [u4; 3]); // 12bit RGB
 
 impl AmigaRgb {
     pub fn euclidean_dist2(&self, other: &Self) -> f64 {
-        let rd = self.r() as f64 - other.r() as f64;
-        let gd = self.g() as f64 - other.g() as f64;
-        let bd = self.b() as f64 - other.b() as f64;
+        let rd = u8::from(self.r()) as f64 - u8::from(other.r()) as f64;
+        let gd = u8::from(self.g()) as f64 - u8::from(other.g()) as f64;
+        let bd = u8::from(self.b()) as f64 - u8::from(other.b()) as f64;
 
         (rd * rd) + (gd * gd) + (bd * bd)
     }
 
-    pub fn r(&self) -> u8 {
-        u8::from(self.0[0])
-    }
-
-    pub fn g(&self) -> u8 {
-        u8::from(self.0[1])
-    }
-
-    pub fn b(&self) -> u8 {
-        u8::from(self.0[2])
-    }
+    pub fn r(&self) -> u4 { self.0[0] }
+    pub fn g(&self) -> u4 { self.0[1] }
+    pub fn b(&self) -> u4 { self.0[2] }
 }
 
 impl From<[u8; 3]> for AmigaRgb {

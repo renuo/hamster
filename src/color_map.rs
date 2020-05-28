@@ -54,19 +54,11 @@ impl ColorMap {
     }
 
     pub fn index_of_similar(&self, needle: AmigaRgb) -> u4 {
-        let nr = u8::from(needle.0[0]) as i32;
-        let ng = u8::from(needle.0[1]) as i32;
-        let nb = u8::from(needle.0[2]) as i32;
-
         let mut index = u4::new(0);
-        let mut min_dist2 = (self.colors.len() as i32).pow(2) * 3;
+        let mut min_dist2 = (self.colors.len() as f64).powf(2.0) * 3.0;
 
         for (i, color) in self.colors.iter().enumerate() {
-            let r = u8::from(color.0[0]) as i32;
-            let g = u8::from(color.0[1]) as i32;
-            let b = u8::from(color.0[2]) as i32;
-
-            let dist2 = (nr - r).pow(2) + (ng - g).pow(2) + (nb - b).pow(2);
+            let dist2 = color.euclidean_dist2(&needle);
             if dist2 < min_dist2 {
                 min_dist2 = dist2;
                 index = u4::new(i as u8);
