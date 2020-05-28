@@ -1,3 +1,4 @@
+use std::cmp;
 use ux::{u2, u4};
 use image::{RgbImage, Rgb};
 use crate::color::AmigaRgb;
@@ -23,10 +24,36 @@ impl HamImage<Ham6Pixel> {
         let mut data: Vec<Ham6Pixel> = Vec::with_capacity((image.width() * image.height()) as usize);
         let color_map = ColorMap::default();
 
-        for (_x, _y, pixel) in image.enumerate_pixels() {
-            let color_index = color_map.index_of_similar(AmigaRgb::from(pixel.clone()));
-            let operation = u2::new(0);
-            data.push(Ham6Pixel { color_index, operation });
+        fn difference([a_r, a_g, a_b]: [u8; 3], [b_r, b_g, b_b]: [u8; 3]) -> [u8; 3] {
+            [
+                cmp::max(a_r, b_r) - cmp::min(a_r, b_r),
+                cmp::max(a_g, b_g) - cmp::min(a_g, b_g),
+                cmp::max(a_b, b_b) - cmp::min(a_b, b_b),
+            ]
+        }
+
+        for (x, y, pixel) in image.enumerate_pixels() {
+            let ham_pixel = if x % image.width() == 0 {
+                let color_index = color_map.index_of_similar(AmigaRgb::from(pixel.clone()));
+                Ham6Pixel { operation: u2::new(0), color_index }
+            } else {
+                let [r, g, b] = pixel.0;
+                let [diff_r, diff_g, diff_b] = difference(pixel.0, image.get_pixel(x - 1, y).0);
+
+                let max = cmp::max(cmp::max(diff_r, diff_g), diff_b);
+                let ham_pixel = if max >= 16 {
+                    let color_index = color_map.index_of_similar(AmigaRgb::from(pixel.clone()));
+                    Ham6Pixel { operation: u2::new(0), color_index }
+                } else if max == diff_r {
+                    Ham6Pixel { operation: u2::new(1), color_index: u4::new(r / 16) }
+                } else if max == diff_g {
+                    Ham6Pixel { operation: u2::new(2), color_index: u4::new(g / 16) }
+                } else {
+                    Ham6Pixel { operation: u2::new(3), color_index: u4::new(b / 16) }
+                };
+                ham_pixel
+            };
+            data.push(ham_pixel);
         }
 
         HamImage {
@@ -46,21 +73,11 @@ impl HamImage<Ham6Pixel> {
             let [previous_r, previous_g, previous_b] = previous_amiga_pixel.0;
 
             let amiga_pixel = match u8::from(operation) {
-                0 => { // look up index color
-                    self.color_map[color_index]
-                },
-                1 => { // modify red
-                    AmigaRgb([color_index, previous_r, previous_b])
-                },
-                2 => { // modify green
-                    AmigaRgb([previous_r, color_index, previous_b])
-                },
-                3 => { // modify blue
-                    AmigaRgb([previous_r, previous_g, color_index])
-                },
-                _ => {
-                    panic!("'operation' should be 'u4', but apparently is not")
-                }
+                0 => { self.color_map[color_index] }, // mode
+                1 => { AmigaRgb([color_index, previous_g, previous_b]) }, // r
+                2 => { AmigaRgb([previous_r, color_index, previous_b]) }, // g
+                3 => { AmigaRgb([previous_r, previous_g, color_index]) }, // b
+                _ => { panic!("'operation' should be 'u4', but apparently is not") }
             };
 
             previous_amiga_pixel = amiga_pixel;
