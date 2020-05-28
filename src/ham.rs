@@ -12,8 +12,8 @@ pub struct Ham6Pixel {
 }
 
 pub struct HamImage<P> {
-    pub width: usize,
-    pub height: usize,
+    pub width: u32,
+    pub height: u32,
     pub data: Vec<P>,
     pub color_map: ColorMap,
 }
@@ -30,19 +30,19 @@ impl HamImage<Ham6Pixel> {
         }
 
         HamImage {
-            width: image.width() as usize,
-            height: image.height() as usize,
+            width: image.width(),
+            height: image.height(),
             data,
             color_map,
         }
     }
 
     pub fn to_rgb(&self) -> RgbImage {
-        let mut output_image: RgbImage = RgbImage::new(self.width as u32, self.height as u32);
+        let mut output_image: RgbImage = RgbImage::new(self.width, self.height);
         let mut previous_amiga_pixel = AmigaRgb::from([0, 0, 0]);
 
         for (x, y, pixel) in output_image.enumerate_pixels_mut() {
-            let Ham6Pixel { color_index, operation } = self.data[y as usize * self.width + x as usize];
+            let Ham6Pixel { color_index, operation } = self.data[(y * self.width + x) as usize];
             let [previous_r, previous_g, previous_b] = previous_amiga_pixel.0;
 
             let amiga_pixel = match u8::from(operation) {
