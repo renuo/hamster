@@ -18,15 +18,56 @@ pub struct HamImage<P> {
     pub color_map: ColorMap,
 }
 
+pub fn color_delta(color: &AmigaRgb, other: &AmigaRgb) -> i32 {
+    let nr = u8::from(other.0[0]) as i32;
+    let ng = u8::from(other.0[1]) as i32;
+    let nb = u8::from(other.0[2]) as i32;
+    let r = u8::from(color.0[0]) as i32;
+    let g = u8::from(color.0[1]) as i32;
+    let b = u8::from(color.0[2]) as i32;
+
+    (nr - r).pow(2) + (ng - g).pow(2) + (nb - b).pow(2)
+}
+
 impl HamImage<Ham6Pixel> {
     pub fn from_rgb(image: RgbImage) -> HamImage<Ham6Pixel> {
         let mut data: Vec<Ham6Pixel> = Vec::with_capacity((image.width() * image.height()) as usize);
         let color_map = ColorMap::default();
+        let mut previous_color = AmigaRgb::from([0, 0, 0]);
 
         for (_x, _y, pixel) in image.enumerate_pixels() {
-            let color_index = color_map.index_of_similar(AmigaRgb::from(pixel.clone()));
-            let operation = u2::new(0);
-            data.push(Ham6Pixel { color_index, operation });
+            let target_color = AmigaRgb::from(pixel.clone());
+            let color_index = color_map.index_of_similar(target_color);
+            let index = color_map[color_index];
+            let red = AmigaRgb([target_color.0[0], previous_color.0[1], previous_color.0[2]]);
+            let green = AmigaRgb([previous_color.0[0], target_color.0[1], previous_color.0[2]]);
+            let blue = AmigaRgb([previous_color.0[0], previous_color.0[1], target_color.0[2]]);
+
+            let mut delta = 999999;
+            let mut new_pixel = Ham6Pixel { color_index, operation: u2::new(0) };
+            let index_delta = color_delta(&index, &target_color);
+            if index_delta < delta {
+                delta = index_delta;
+                previous_color = index;
+            }
+            let red_delta = color_delta(&red, &target_color);
+            if red_delta < delta {
+                delta = red_delta;
+                previous_color = red;
+                new_pixel = Ham6Pixel { color_index: red.0[0], operation: u2::new(1) };
+            }
+            let green_delta = color_delta(&green, &target_color);
+            if green_delta < delta {
+                delta = green_delta;
+                previous_color = green;
+                new_pixel = Ham6Pixel { color_index: green.0[1], operation: u2::new(2) };
+            }
+            let blue_delta = color_delta(&blue, &target_color);
+            if blue_delta < delta {
+                previous_color = blue;
+                new_pixel = Ham6Pixel { color_index: blue.0[2], operation: u2::new(3) };
+            }
+            data.push(new_pixel);
         }
 
         HamImage {
