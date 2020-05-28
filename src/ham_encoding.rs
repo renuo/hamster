@@ -10,7 +10,7 @@ pub struct Computation {
     pub distance: f64,
 }
 
-pub fn encode(color_map: &ColorMap, previous_color: AmigaRgb, target_color: AmigaRgb) -> Computation {
+pub fn brutal_encode(color_map: &ColorMap, previous_color: AmigaRgb, target_color: AmigaRgb) -> Computation {
     let color_index = color_map.index_of_similar(target_color);
 
     let index_color = color_map[color_index];
@@ -50,4 +50,16 @@ pub fn encode(color_map: &ColorMap, previous_color: AmigaRgb, target_color: Amig
     );
 
     computations[0]
+}
+
+pub fn index_encode(color_map: &ColorMap, _previous_color: AmigaRgb, target_color: AmigaRgb) -> Computation {
+    let color_index = color_map.index_of_similar(target_color);
+    let index_color = color_map[color_index];
+
+    Computation {
+        operation: u2::new(0),
+        payload: color_index,
+        color: index_color,
+        distance: index_color.euclidean_dist2(&target_color),
+    }
 }

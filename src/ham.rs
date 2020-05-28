@@ -2,7 +2,7 @@ use ux::{u2, u4};
 use image::{RgbImage, Rgb};
 use crate::color::AmigaRgb;
 use crate::color_map::ColorMap;
-use crate::ham_encoding::encode;
+use crate::ham_encoding::*;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Ham6Pixel {
@@ -26,9 +26,9 @@ impl HamImage<Ham6Pixel> {
 
         for (_x, _y, pixel) in image.enumerate_pixels() {
             let target_color = AmigaRgb::from(pixel.clone());
-            let best_computation = encode(&color_map, previous_color, target_color);
-            previous_color = best_computation.color;
+            let best_computation = index_encode(&color_map, previous_color, target_color);
             data.push(Ham6Pixel { color_index: best_computation.payload, operation: best_computation.operation });
+            previous_color = best_computation.color;
         }
 
         HamImage {
