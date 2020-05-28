@@ -95,7 +95,6 @@ impl IndexMut<u8> for ColorMap {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

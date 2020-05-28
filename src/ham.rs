@@ -2,9 +2,8 @@ use ux::{u2, u4};
 use image::{RgbImage, Rgb};
 use crate::color::AmigaRgb;
 use crate::color_map::ColorMap;
+use crate::ham_encoding::encode;
 
-// Maybe we could reuse the Pixel trait from the image crate instead of defining this struct
-// ourselves?
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Ham6Pixel {
     pub color_index: u4,
@@ -18,14 +17,6 @@ pub struct HamImage<P> {
     pub color_map: ColorMap,
 }
 
-#[derive(Debug, Copy, Clone)]
-pub struct DistanceComputation {
-    pub operation: u2,
-    pub payload: u4,
-    pub color: AmigaRgb,
-    pub distance: f64,
-}
-
 impl HamImage<Ham6Pixel> {
     pub fn from_rgb(image: RgbImage) -> HamImage<Ham6Pixel> {
         let mut data: Vec<Ham6Pixel> = Vec::with_capacity((image.width() * image.height()) as usize);
@@ -35,47 +26,9 @@ impl HamImage<Ham6Pixel> {
 
         for (_x, _y, pixel) in image.enumerate_pixels() {
             let target_color = AmigaRgb::from(pixel.clone());
-            let color_index = color_map.index_of_similar(target_color);
-
-            let index_color = color_map[color_index];
-            let red_modified = AmigaRgb([target_color.r(), previous_color.g(), previous_color.b()]);
-            let green_modified = AmigaRgb([previous_color.r(), target_color.g(), previous_color.b()]);
-            let blue_modified = AmigaRgb([previous_color.r(), previous_color.g(), target_color.b()]);
-
-            let mut computations = [
-                DistanceComputation {
-                    operation: u2::new(0),
-                    payload: color_index,
-                    color: index_color,
-                    distance: index_color.euclidean_dist2(&target_color),
-                },
-                DistanceComputation {
-                    operation: u2::new(1),
-                    payload: red_modified.r(),
-                    color: red_modified,
-                    distance: red_modified.euclidean_dist2(&target_color),
-                },
-                DistanceComputation {
-                    operation: u2::new(2),
-                    payload: green_modified.g(),
-                    color: green_modified,
-                    distance: green_modified.euclidean_dist2(&target_color),
-                },
-                DistanceComputation {
-                    operation: u2::new(3),
-                    payload: blue_modified.b(),
-                    color: blue_modified,
-                    distance: blue_modified.euclidean_dist2(&target_color),
-                },
-            ];
-
-            computations.sort_unstable_by(|a, b|
-                a.distance.partial_cmp(&b.distance).unwrap()
-            );
-
-            let best_comp = computations[0];
-            previous_color = best_comp.color;
-            data.push(Ham6Pixel { color_index: best_comp.payload, operation: best_comp.operation });
+            let best_computation = encode(&color_map, previous_color, target_color);
+            previous_color = best_computation.color;
+            data.push(Ham6Pixel { color_index: best_computation.payload, operation: best_computation.operation });
         }
 
         HamImage {
