@@ -91,6 +91,7 @@ Learn more about Rust by improving this scaffold. For example you could
 * reasearch the IFF image format
 * improve performance of the current code (e.g. with a [flamegraph](https://github.com/flamegraph-rs/flamegraph)
   or [criterion](https://docs.rs/criterion/0.3.2/criterion/) directly)
+* process the image lines multithreaded
 
 ### Retro Computing
 
