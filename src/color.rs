@@ -7,6 +7,28 @@ pub struct AmigaRgb (pub [u4; 3]); // 12bit RGB
 // Would the following be worth a try? We could then use a downcast_channel adaption:
 // pub type AmigaRgb = Rgb<u4>;
 
+impl AmigaRgb {
+    pub fn euclidean_dist2(&self, other: &Self) -> f64 {
+        let rd = self.r() as f64 - other.r() as f64;
+        let gd = self.g() as f64 - other.g() as f64;
+        let bd = self.b() as f64 - other.b() as f64;
+
+        (rd * rd) + (gd * gd) + (bd * bd)
+    }
+
+    pub fn r(&self) -> u8 {
+        u8::from(self.0[0])
+    }
+
+    pub fn g(&self) -> u8 {
+        u8::from(self.0[1])
+    }
+
+    pub fn b(&self) -> u8 {
+        u8::from(self.0[2])
+    }
+}
+
 impl From<[u8; 3]> for AmigaRgb {
     fn from(rgb: [u8; 3]) -> Self {
         AmigaRgb([u4::new(rgb[0]), u4::new(rgb[1]), u4::new(rgb[2])])
@@ -59,5 +81,20 @@ mod tests {
         assert_eq!(r, 0);
         assert_eq!(g, 17);
         assert_eq!(b, 255);
+    }
+
+    #[test]
+    fn test_euclidean_dist2() {
+        let a = AmigaRgb::from([15, 1, 0]);
+        let b = AmigaRgb::from([14, 1, 0]);
+        let c = AmigaRgb::from([15, 1, 4]);
+
+        assert_eq!(a.euclidean_dist2(&b), b.euclidean_dist2(&a));
+        assert_eq!(a.euclidean_dist2(&c), c.euclidean_dist2(&a));
+        assert_eq!(b.euclidean_dist2(&c), c.euclidean_dist2(&b));
+
+        assert_eq!(a.euclidean_dist2(&b), 1.0);
+        assert_eq!(a.euclidean_dist2(&c), 16.0);
+        assert_eq!(b.euclidean_dist2(&c), 17.0);
     }
 }
