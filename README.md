@@ -122,3 +122,4 @@ Learn about digital color representation. For example you could
   Also interesting are the [wide-gamut efforts for CSS](https://webkit.org/blog/6682/improving-color-on-the-web).
 * research HAM Palette optimization and encoding. There are techniques like dithering and
   [many more](http://mrsebe.bplaced.net/blog/wordpress/?p=1339), but why not apply some ML for example?
+* Research [color distances](https://en.wikipedia.org/wiki/Color_difference) in color spaces
