@@ -50,7 +50,7 @@ impl HamImage<Ham6Pixel> {
                     self.color_map[color_index]
                 },
                 1 => { // modify red
-                    AmigaRgb([color_index, previous_r, previous_b])
+                    AmigaRgb([color_index, previous_g, previous_b])
                 },
                 2 => { // modify green
                     AmigaRgb([previous_r, color_index, previous_b])
