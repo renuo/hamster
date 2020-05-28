@@ -43,8 +43,8 @@ pub fn dither_floyd_steinberg(mut img: RgbImage) -> RgbImage {
     let mut current_error_b: i16;
 
     let (width, height) = img.dimensions();
-    for x in 0..width {
-        for y in 0..height {
+    for x in 1..width-2 {
+        for y in 1..height-2 {
             let original_rgb = img.get_pixel(x, y).clone();
             let amiga_rgb = AmigaRgb::from(original_rgb);
             let target_rgb = Rgb::from(amiga_rgb);
