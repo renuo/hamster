@@ -123,3 +123,11 @@ Learn about digital color representation. For example you could
 * research HAM Palette optimization and encoding. There are techniques like dithering and
   [many more](http://mrsebe.bplaced.net/blog/wordpress/?p=1339), but why not apply some ML for example?
 * Research [color distances](https://en.wikipedia.org/wiki/Color_difference) in color spaces
+
+## Showcase
+
+Here are some (intermediary) results for your eyes (have a peek at the Git branches)
+
+
+
+The resulting presentation of @schmijos is available as [Google Slides here](https://docs.google.com/presentation/d/1cLnW4LX60ggrs86tboSEBRyazPjDO_USMKzlwbq3McA/edit?usp=sharing).
