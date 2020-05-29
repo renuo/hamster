@@ -126,7 +126,8 @@ Learn about digital color representation. For example you could
 
 ## Showcase
 
-Here are some (intermediary) results for your eyes (have a peek at the Git branches)
+Here are some (intermediary) results for your eyes (have a peek at the Git branches) made by
+[@coorasse](https://github.com/coorasse), [kayzen-git](@kayzen-git)
 
 
 
