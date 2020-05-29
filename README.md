@@ -129,12 +129,12 @@ Learn about digital color representation. For example you could
 Here are some (intermediary) results for your eyes (have a peek at the Git branches) made by
 [@coorasse](https://github.com/coorasse), [@kayzen-git](https://github.com/kayzen-git), [@macav](https://github.com/macav), [@schmijos](https://github.com/schmijos), [@sihu](https://github.com/sihu) and [@simon-isler](https://github.com/simon-isler)
 
+<img src="./data_out_showcase/gg_2.png" width="24%"/> <img src="./data_out_showcase/gg_3.png" width="24%"/> <img src="./data_out_showcase/gg_4.png" width="24%"/> <img src="./data_out_showcase/gg_5.png" width="24%"/>
+
 <img src="./data_out_showcase/mario_16.jpg" width="24%"/> <img src="./data_out_showcase/mario_random.jpg" width="24%"/> <img src="./data_out_showcase/mario_nearly_ham.png" width="24%"/> <img src="./data_out_showcase/mario_ham.png" width="24%"/>
 
 <img src="./data_out_showcase/hamster_4096.png" width="24%"/> <img src="./data_out_showcase/hamster_buggy.png" width="24%"/> <img src="./data_out_showcase/hamster_worst.png" width="24%"/> <img src="./data_out_showcase/hamster_ham.png" width="24%"/> 
 
 <img src="./data_out_showcase/sw_red.gif" width="24%"/> <img src="./data_out_showcase/sw_green.gif" width="24%"/> <img src="./data_out_showcase/sw_random.gif" width="24%"/>
-
-<img src="./data_out_showcase/gg_2.png" width="24%"/> <img src="./data_out_showcase/gg_3.png" width="24%"/> <img src="./data_out_showcase/gg_4.png" width="24%"/> <img src="./data_out_showcase/gg_5.png" width="24%"/>
 
 The resulting presentation of [@schmijos](https://github.com/schmijos) is available as [Google Slides here](https://docs.google.com/presentation/d/1cLnW4LX60ggrs86tboSEBRyazPjDO_USMKzlwbq3McA/edit?usp=sharing).
