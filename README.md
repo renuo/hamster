@@ -138,3 +138,7 @@ Here are some (intermediary) results for your eyes (have a peek at the Git branc
 <img src="./data_out_showcase/sw_red.gif" width="24%"/> <img src="./data_out_showcase/sw_green.gif" width="24%"/> <img src="./data_out_showcase/sw_random.gif" width="24%"/>
 
 The resulting presentation of [@schmijos](https://github.com/schmijos) is available as [Google Slides here](https://docs.google.com/presentation/d/1cLnW4LX60ggrs86tboSEBRyazPjDO_USMKzlwbq3McA/edit?usp=sharing).
+
+The resulting presentation of [@coorasse](https://github.com/coorasse) is available as [PDF](https://drive.google.com/file/d/1KhncRJOiOSOvB7U5YuDzARnwNl4ZaJN1/view?usp=sharing).
+
+
