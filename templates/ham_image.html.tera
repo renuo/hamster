@@ -1,0 +1,8 @@
+{% extends "base" %}
+
+{% block content %}
+    <h1>Renuo Hamster</h1>
+    <p>Hello! Here is your converted ham image:</p>
+
+    <img src="/{{ file_name }}" />
+{% endblock content %}
