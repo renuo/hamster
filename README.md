@@ -130,4 +130,4 @@ Here are some (intermediary) results for your eyes (have a peek at the Git branc
 
 
 
-The resulting presentation of @schmijos is available as [Google Slides here](https://docs.google.com/presentation/d/1cLnW4LX60ggrs86tboSEBRyazPjDO_USMKzlwbq3McA/edit?usp=sharing).
+The resulting presentation of [@schmijos](https://github.com/schmijos) is available as [Google Slides here](https://docs.google.com/presentation/d/1cLnW4LX60ggrs86tboSEBRyazPjDO_USMKzlwbq3McA/edit?usp=sharing).
