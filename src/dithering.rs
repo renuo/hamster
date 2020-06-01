@@ -36,11 +36,11 @@ pub fn dither_linear_naive(mut img: RgbImage) -> RgbImage {
      (1/16)
  */
 pub fn dither_floyd_steinberg(mut img: RgbImage) -> RgbImage {
-    const FACTOR: f64 = 1.0/16.0;
+    const FACTOR: f64 = 1.0/48.0;
 
-    let mut current_error_r: i16;
-    let mut current_error_g: i16;
-    let mut current_error_b: i16;
+    let mut current_error_r: f64;
+    let mut current_error_g: f64;
+    let mut current_error_b: f64;
 
     let (width, height) = img.dimensions();
     for x in 1..width-2 {
@@ -49,36 +49,48 @@ pub fn dither_floyd_steinberg(mut img: RgbImage) -> RgbImage {
             let amiga_rgb = AmigaRgb::from(original_rgb);
             let target_rgb = Rgb::from(amiga_rgb);
 
-            current_error_r = original_rgb.0[0] as i16 - target_rgb.0[0] as i16;
-            current_error_g = original_rgb.0[1] as i16 - target_rgb.0[1] as i16;
-            current_error_b = original_rgb.0[2] as i16 - target_rgb.0[2] as i16;
+            current_error_r = original_rgb.0[0] as f64 - target_rgb.0[0] as f64;
+            current_error_g = original_rgb.0[1] as f64 - target_rgb.0[1] as f64;
+            current_error_b = original_rgb.0[2] as f64 - target_rgb.0[2] as f64;
 
-            let corrected_rgb = Rgb([
-                (original_rgb.0[0] as i16 + current_error_r).max(0).min(255) as u8,
-                (original_rgb.0[1] as i16 + current_error_g).max(0).min(255) as u8,
-                (original_rgb.0[2] as i16 + current_error_b).max(0).min(255) as u8,
-            ]);
+            let correction= [
+                (original_rgb.0[0] as f64 + current_error_r),
+                (original_rgb.0[1] as f64 + current_error_g),
+                (original_rgb.0[2] as f64 + current_error_b),
+            ];
 
-            img.put_pixel(x, y, corrected_rgb);
+            //img.put_pixel(x, y, Rgb([
+            //    correction[0].max(0.0).min(255.0) as u8,
+            //    correction[1].max(0.0).min(255.0) as u8,
+            //    correction[2].max(0.0).min(255.0) as u8
+            //]));
+
+            let p1 = img.get_pixel(x + 1, y).clone();
             img.put_pixel(x + 1, y, Rgb([
-                (corrected_rgb.0[0] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[1] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[2] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
+                (p1.0[0] as f64 + correction[0] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
+                (p1.0[1] as f64 + correction[1] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
+                (p1.0[2] as f64 + correction[2] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
             ]));
+
+            let p2 = img.get_pixel(x + 1, y + 1).clone();
             img.put_pixel(x + 1, y + 1, Rgb([
-                (corrected_rgb.0[0] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[1] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[2] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
+                (p2.0[0] as f64 + correction[0] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
+                (p2.0[1] as f64 + correction[1] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
+                (p2.0[2] as f64 + correction[2] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
             ]));
+
+            let p3 = img.get_pixel(x, y + 1).clone();
             img.put_pixel(x, y + 1, Rgb([
-                (corrected_rgb.0[0] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[1] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[2] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
+                (p3.0[0] as f64 + correction[0] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
+                (p3.0[1] as f64 + correction[1] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
+                (p3.0[2] as f64 + correction[2] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
             ]));
+
+            let p4 = img.get_pixel(x - 1, y + 1).clone();
             img.put_pixel(x - 1, y + 1, Rgb([
-                (corrected_rgb.0[0] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[1] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
-                (corrected_rgb.0[2] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
+                (p4.0[0] as f64 + correction[0] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
+                (p4.0[1] as f64 + correction[1] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
+                (p4.0[2] as f64 + correction[2] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
             ]));
         }
     }
