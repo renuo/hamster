@@ -36,8 +36,6 @@ pub fn dither_linear_naive(mut img: RgbImage) -> RgbImage {
      (1/16)
  */
 pub fn dither_floyd_steinberg(mut img: RgbImage) -> RgbImage {
-    const FACTOR: f64 = 1.0/48.0;
-
     let mut current_error_r: f64;
     let mut current_error_g: f64;
     let mut current_error_b: f64;
@@ -59,39 +57,23 @@ pub fn dither_floyd_steinberg(mut img: RgbImage) -> RgbImage {
                 (original_rgb.0[2] as f64 + current_error_b),
             ];
 
-            //img.put_pixel(x, y, Rgb([
-            //    correction[0].max(0.0).min(255.0) as u8,
-            //    correction[1].max(0.0).min(255.0) as u8,
-            //    correction[2].max(0.0).min(255.0) as u8
-            //]));
+            fn pixel_plus_correction(pixel: Rgb<u8>, correction: &[f64; 3], factor: f64) -> Rgb<u8> {
+                Rgb([
+                    (pixel.0[0] as f64 + correction[0] * factor).max(0.0).min(255.0) as u8,
+                    (pixel.0[1] as f64 + correction[1] * factor).max(0.0).min(255.0) as u8,
+                    (pixel.0[2] as f64 + correction[2] * factor).max(0.0).min(255.0) as u8,
+                ])
+            }
 
             let p1 = img.get_pixel(x + 1, y).clone();
-            img.put_pixel(x + 1, y, Rgb([
-                (p1.0[0] as f64 + correction[0] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
-                (p1.0[1] as f64 + correction[1] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
-                (p1.0[2] as f64 + correction[2] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
-            ]));
-
             let p2 = img.get_pixel(x + 1, y + 1).clone();
-            img.put_pixel(x + 1, y + 1, Rgb([
-                (p2.0[0] as f64 + correction[0] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
-                (p2.0[1] as f64 + correction[1] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
-                (p2.0[2] as f64 + correction[2] as f64 * FACTOR * 1.0).max(0.0).min(255.0) as u8,
-            ]));
-
             let p3 = img.get_pixel(x, y + 1).clone();
-            img.put_pixel(x, y + 1, Rgb([
-                (p3.0[0] as f64 + correction[0] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
-                (p3.0[1] as f64 + correction[1] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
-                (p3.0[2] as f64 + correction[2] as f64 * FACTOR * 5.0).max(0.0).min(255.0) as u8,
-            ]));
-
             let p4 = img.get_pixel(x - 1, y + 1).clone();
-            img.put_pixel(x - 1, y + 1, Rgb([
-                (p4.0[0] as f64 + correction[0] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
-                (p4.0[1] as f64 + correction[1] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
-                (p4.0[2] as f64 + correction[2] as f64 * FACTOR * 3.0).max(0.0).min(255.0) as u8,
-            ]));
+
+            img.put_pixel(x + 1, y, pixel_plus_correction(p1, &correction, 7.0/16.0));
+            img.put_pixel(x + 1, y + 1, pixel_plus_correction(p2, &correction, 1.0/16.0));
+            img.put_pixel(x, y + 1, pixel_plus_correction(p3, &correction, 5.0/16.0));
+            img.put_pixel(x - 1, y + 1, pixel_plus_correction(p4, &correction, 3.0/16.0));
         }
     }
 
@@ -128,8 +110,6 @@ pub fn dither_jjn(mut img: RgbImage) -> RgbImage {
                 (original_rgb.0[1] as i16 + current_error_g).max(0).min(255) as u8,
                 (original_rgb.0[2] as i16 + current_error_b).max(0).min(255) as u8,
             ]);
-
-            img.put_pixel(x, y, corrected_rgb);
 
             img.put_pixel(x + 1, y, Rgb([
                 (corrected_rgb.0[0] as f64 * FACTOR * 7.0).max(0.0).min(255.0) as u8,
