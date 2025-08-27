@@ -66,7 +66,7 @@ Enhance the current solution to make full use of the last two bits by using your
 
 Some reading resources:
 
-* http://theamigamuseum.com/the-hardware/the-amigas-graphic-modes/
+* https://web.archive.org/web/20221120172707/http://theamigamuseum.com/the-hardware/the-amigas-graphic-modes/
 * https://en.wikipedia.org/wiki/Hold-And-Modify
 * https://wiki.amigaos.net/wiki/Classic_Graphics_Primitives#Advanced_Topics
 
